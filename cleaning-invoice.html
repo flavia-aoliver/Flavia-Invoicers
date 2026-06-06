@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flavia Cleaning Invoice</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-dark:   #1A6FA8;
+    --blue-mid:    #2389CC;
+    --blue-light:  #4FB3E8;
+    --blue-pale:   #D6EEF9;
+    --blue-bg:     #EBF6FC;
+    --green:       #5CB85C;
+    --green-dark:  #3D8B3D;
+    --white:       #FFFFFF;
+    --off-white:   #F4FBFF;
+    --text-dark:   #0D2B3E;
+    --text-mid:    #2C5F7A;
+    --text-light:  #6A9AB5;
+    --border:      #C2DFF0;
+    --shadow:      0 6px 32px rgba(26,111,168,0.13);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Lato', sans-serif;
+    background: linear-gradient(135deg, #D6EEF9 0%, #EBF6FC 50%, #C8E8F5 100%);
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--blue-dark);
+    padding: 13px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo-mini { width: 36px; height: 36px; }
+  .nav-title {
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  .nav-title span { color: var(--blue-light); }
+  .btn-print {
+    background: var(--green);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 7px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 2px 8px rgba(92,184,92,0.3);
+  }
+  .btn-print:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+  /* ── LAYOUT ── */
+  .wrapper {
+    display: grid;
+    grid-template-columns: 370px 1fr;
+    max-width: 1180px;
+    margin: 28px auto;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  /* ── FORM PANEL ── */
+  .panel-form {
+    background: var(--white);
+    padding: 28px 24px;
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    max-height: 91vh;
+  }
+  .panel-form h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+    margin-bottom: 22px;
+    padding-bottom: 11px;
+    border-bottom: 2px solid var(--blue-pale);
+  }
+  .form-section { margin-bottom: 22px; }
+  .form-section-title {
+    font-size: 0.67rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--blue-mid);
+    margin-bottom: 11px;
+    padding: 5px 9px;
+    background: var(--blue-pale);
+    border-radius: 5px;
+    border-left: 3px solid var(--blue-mid);
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .form-group { margin-bottom: 10px; }
+  .form-group label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-mid);
+    margin-bottom: 4px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .form-group input, .form-group textarea {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.86rem;
+    color: var(--text-dark);
+    background: var(--off-white);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: var(--blue-mid);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(35,137,204,0.1);
+  }
+  .form-group textarea { resize: vertical; min-height: 64px; }
+
+  /* Services */
+  .services-header {
+    display: grid;
+    grid-template-columns: 1fr 72px 90px 32px;
+    gap: 6px;
+    font-size: 0.67rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--text-light);
+    margin-bottom: 6px;
+    padding: 0 2px;
+  }
+  .service-row {
+    display: grid;
+    grid-template-columns: 1fr 72px 90px 32px;
+    gap: 6px;
+    margin-bottom: 6px;
+    align-items: center;
+  }
+  .service-row input {
+    padding: 8px 9px;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.83rem;
+    color: var(--text-dark);
+    background: var(--off-white);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .service-row input:focus { border-color: var(--blue-mid); background: #fff; }
+  .btn-remove {
+    background: none; border: 1.5px solid #f0c8c0; color: #d07060;
+    border-radius: 6px; width: 32px; height: 32px; cursor: pointer;
+    font-size: 0.9rem; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .btn-remove:hover { background: #fdf0ec; }
+  .btn-add {
+    background: var(--blue-pale);
+    color: var(--blue-dark);
+    border: 1.5px dashed var(--blue-light);
+    border-radius: 8px;
+    padding: 9px 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 4px;
+    transition: background 0.2s;
+  }
+  .btn-add:hover { background: #C2DFF0; }
+
+  /* ── PREVIEW PANEL ── */
+  .panel-preview {
+    background: linear-gradient(160deg, #D0EAF8 0%, #E8F5FC 100%);
+    padding: 28px;
+    overflow-y: auto;
+    max-height: 91vh;
+  }
+
+  /* ── INVOICE CARD ── */
+  .invoice-card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 28px rgba(26,111,168,0.14);
+    overflow: hidden;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .inv-header {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 60%, var(--blue-light) 100%);
+    padding: 28px 32px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  /* water bubble decoration */
+  .inv-header::before {
+    content: '';
+    position: absolute;
+    bottom: -18px; right: -18px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+  }
+  .inv-header::after {
+    content: '';
+    position: absolute;
+    bottom: 8px; right: 60px;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* SVG LOGO */
+  .inv-logo-wrap { display: flex; align-items: center; gap: 12px; }
+  .inv-logo-svg { width: 54px; height: 54px; flex-shrink: 0; }
+  .inv-brand-text {}
+  .inv-brand-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .inv-brand-name .f-letter { color: var(--green); }
+  .inv-brand-sub {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    margin-top: 3px;
+  }
+
+  .inv-title-block { text-align: right; z-index: 1; }
+  .inv-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.1em;
+  }
+  .inv-number {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.65);
+    margin-top: 3px;
+    letter-spacing: 0.06em;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /* META STRIP */
+  .inv-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: var(--blue-dark);
+  }
+  .inv-meta-cell {
+    padding: 13px 20px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+  .inv-meta-cell:last-child { border-right: none; }
+  .inv-meta-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--blue-light);
+    margin-bottom: 4px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .inv-meta-value {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /* PARTIES */
+  .inv-parties {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 22px 32px;
+    border-bottom: 1px solid var(--border);
+    gap: 0;
+  }
+  .inv-party { padding-right: 20px; }
+  .inv-party + .inv-party { padding-right: 0; padding-left: 20px; border-left: 1px solid var(--border); }
+  .inv-party-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--blue-mid);
+    margin-bottom: 7px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .inv-party-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+  }
+  .inv-party-detail {
+    font-size: 0.8rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+  }
+
+  /* SERVICES */
+  .inv-services { padding: 0 32px 20px; }
+  .inv-services-header {
+    display: grid;
+    grid-template-columns: 1fr 60px 90px;
+    gap: 8px;
+    padding: 9px 0;
+    border-bottom: 2px solid var(--blue-dark);
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    color: var(--blue-dark);
+    margin-top: 18px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .inv-services-header span:not(:first-child) { text-align: right; }
+  .inv-service-row {
+    display: grid;
+    grid-template-columns: 1fr 60px 90px;
+    gap: 8px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--blue-pale);
+    font-size: 0.86rem;
+  }
+  .inv-service-row span:not(:first-child) { text-align: right; }
+  .inv-service-name { color: var(--text-dark); font-weight: 600; }
+  .inv-service-qty { color: var(--text-light); }
+  .inv-service-price { color: var(--blue-dark); font-weight: 600; }
+
+  /* TOTALS */
+  .inv-totals {
+    padding: 14px 32px 22px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .inv-totals-table { min-width: 230px; }
+  .inv-totals-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    font-size: 0.86rem;
+    color: var(--text-mid);
+  }
+  .inv-totals-row.total {
+    border-top: 2px solid var(--blue-dark);
+    margin-top: 8px;
+    padding-top: 11px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    font-family: 'Montserrat', sans-serif;
+  }
+  .inv-totals-row.total .amount { color: var(--blue-dark); font-size: 1.2rem; }
+
+  /* PAYMENT */
+  .inv-payment {
+    background: linear-gradient(135deg, var(--blue-pale) 0%, #E0F2FC 100%);
+    margin: 0 32px 20px;
+    border-radius: 9px;
+    padding: 14px 16px;
+    border-left: 4px solid var(--blue-mid);
+  }
+  .inv-payment-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--blue-dark);
+    margin-bottom: 7px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .inv-payment-info { font-size: 0.83rem; color: var(--text-mid); line-height: 1.7; }
+
+  /* NOTES */
+  .inv-notes {
+    background: #F0FAF0;
+    margin: 0 32px 22px;
+    border-radius: 9px;
+    padding: 13px 16px;
+    border-left: 4px solid var(--green);
+  }
+  .inv-notes-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--green-dark);
+    margin-bottom: 6px;
+    font-family: 'Montserrat', sans-serif;
+  }
+  .inv-notes-text { font-size: 0.83rem; color: #3a6a3a; line-height: 1.6; }
+
+  /* FOOTER */
+  .inv-footer {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+    padding: 14px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .inv-footer::before {
+    content:''; position: absolute;
+    bottom: -20px; left: -20px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .inv-footer-msg {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.8);
+    font-style: italic;
+    font-family: 'Lato', sans-serif;
+  }
+  .inv-footer-contact {
+    font-size: 0.75rem;
+    color: var(--blue-light);
+    text-align: right;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: #fff; }
+    .nav, .panel-form { display: none !important; }
+    .wrapper { display: block; max-width: 100%; margin: 0; box-shadow: none; border-radius: 0; }
+    .panel-preview { max-height: none; padding: 0; background: #fff; }
+    .invoice-card { box-shadow: none; border-radius: 0; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <svg class="nav-logo-mini" viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="20" fill="rgba(255,255,255,0.1)"/>
+      <ellipse cx="16" cy="20" rx="9" ry="9" stroke="#5CB85C" stroke-width="3.5" fill="none"/>
+      <ellipse cx="16" cy="20" rx="9" ry="9" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+      <circle cx="16" cy="20" r="4" fill="#5CB85C"/>
+      <text x="27" y="25" font-family="Montserrat,sans-serif" font-weight="800" font-size="11" fill="white">F</text>
+    </svg>
+    <div class="nav-title"><span>Flavia</span> Cleaning · Invoice</div>
+  </div>
+  <button class="btn-print" onclick="window.print()">🖨 Print / Save PDF</button>
+</nav>
+
+<div class="wrapper">
+
+  <!-- ════ FORM ════ -->
+  <div class="panel-form">
+    <h2>✏️ Invoice Details</h2>
+
+    <div class="form-section">
+      <div class="form-section-title">📋 Your Information</div>
+      <div class="form-group"><label>Business Name</label>
+        <input id="myName" value="Flavia Cleaning" oninput="update()"></div>
+      <div class="form-group"><label>Phone</label>
+        <input id="myPhone" value="" placeholder="(555) 000-0000" oninput="update()"></div>
+      <div class="form-group"><label>Email</label>
+        <input id="myEmail" value="" placeholder="flavia@email.com" oninput="update()"></div>
+      <div class="form-group"><label>City, State</label>
+        <input id="myAddress" value="" placeholder="Miami, FL" oninput="update()"></div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">👤 Client Information</div>
+      <div class="form-group"><label>Client Name</label>
+        <input id="clientName" value="" placeholder="Client full name" oninput="update()"></div>
+      <div class="form-group"><label>Client Address</label>
+        <input id="clientAddress" value="" placeholder="Street, City, State, ZIP" oninput="update()"></div>
+      <div class="form-group"><label>Client Phone / Email</label>
+        <input id="clientContact" value="" placeholder="(555) 000-0000" oninput="update()"></div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">📅 Invoice Info</div>
+      <div class="form-row">
+        <div class="form-group"><label>Invoice #</label>
+          <input id="invNum" value="001" oninput="update()"></div>
+        <div class="form-group"><label>Invoice Date</label>
+          <input id="invDate" type="date" oninput="update()"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Due Date</label>
+          <input id="dueDate" type="date" oninput="update()"></div>
+        <div class="form-group"><label>Service Date</label>
+          <input id="serviceDate" type="date" oninput="update()"></div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">🧹 Services</div>
+      <div class="services-header">
+        <span>Description</span><span>Qty</span><span>Price ($)</span><span></span>
+      </div>
+      <div id="servicesContainer"></div>
+      <button class="btn-add" onclick="addService()">+ Add Service</button>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">💳 Payment Info</div>
+      <div class="form-group"><label>Accepted Methods</label>
+        <input id="payMethod" value="Zelle · Cash · Venmo" oninput="update()"></div>
+      <div class="form-group"><label>Details (Zelle / Venmo / Bank)</label>
+        <textarea id="payInfo" oninput="update()" placeholder="Zelle: (555) 000-0000&#10;Venmo: @flavia-cleaning"></textarea></div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">📝 Notes</div>
+      <div class="form-group">
+        <textarea id="notes" oninput="update()">Thank you for choosing Flavia Cleaning! Please don't hesitate to contact me with any questions.</textarea>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <div class="form-section-title">🏷 Tax</div>
+      <div class="form-group"><label>Tax Rate (%)</label>
+        <input id="taxRate" type="number" value="0" min="0" max="30" step="0.1" oninput="update()"></div>
+    </div>
+  </div>
+
+  <!-- ════ PREVIEW ════ -->
+  <div class="panel-preview">
+    <div class="invoice-card" id="invoiceCard">
+
+      <!-- HEADER -->
+      <div class="inv-header">
+        <div class="inv-logo-wrap">
+          <!-- SVG Logo: circular O with green dot, like Oliveira style but for Flavia -->
+          <svg class="inv-logo-svg" viewBox="0 0 54 54" fill="none">
+            <!-- outer ring green+blue gradient -->
+            <circle cx="27" cy="27" r="24" stroke="url(#lg1)" stroke-width="4" fill="none"/>
+            <!-- inner fill circle transparent -->
+            <circle cx="27" cy="27" r="14" fill="rgba(255,255,255,0.08)"/>
+            <!-- water droplets inside circle -->
+            <circle cx="22" cy="30" r="2.5" fill="rgba(255,255,255,0.25)"/>
+            <circle cx="29" cy="33" r="1.8" fill="rgba(255,255,255,0.18)"/>
+            <circle cx="34" cy="28" r="1.2" fill="rgba(255,255,255,0.2)"/>
+            <!-- green dot accent top-right of O -->
+            <circle cx="44" cy="12" r="6" fill="#5CB85C"/>
+            <circle cx="44" cy="12" r="3.5" fill="#3D8B3D"/>
+            <defs>
+              <linearGradient id="lg1" x1="3" y1="3" x2="51" y2="51">
+                <stop offset="0%" stop-color="#5CB85C"/>
+                <stop offset="100%" stop-color="#4FB3E8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="inv-brand-text">
+            <div class="inv-brand-name"><span class="f-letter">F</span>lavia</div>
+            <div class="inv-brand-sub">Cleaning Services</div>
+          </div>
+        </div>
+        <div class="inv-title-block">
+          <div class="inv-title">INVOICE</div>
+          <div class="inv-number"># <span id="pInvNum">001</span></div>
+        </div>
+      </div>
+
+      <!-- META STRIP -->
+      <div class="inv-meta">
+        <div class="inv-meta-cell">
+          <div class="inv-meta-label">Invoice Date</div>
+          <div class="inv-meta-value" id="pInvDate">—</div>
+        </div>
+        <div class="inv-meta-cell">
+          <div class="inv-meta-label">Service Date</div>
+          <div class="inv-meta-value" id="pServiceDate">—</div>
+        </div>
+        <div class="inv-meta-cell">
+          <div class="inv-meta-label">Due Date</div>
+          <div class="inv-meta-value" id="pDueDate">—</div>
+        </div>
+      </div>
+
+      <!-- PARTIES -->
+      <div class="inv-parties">
+        <div class="inv-party">
+          <div class="inv-party-label">From</div>
+          <div class="inv-party-name" id="pMyName">Flavia Cleaning</div>
+          <div class="inv-party-detail">
+            <span id="pMyPhone"></span><span id="sepPhone"></span>
+            <span id="pMyEmail"></span><span id="sepEmail"></span>
+            <span id="pMyAddress"></span>
+          </div>
+        </div>
+        <div class="inv-party">
+          <div class="inv-party-label">Bill To</div>
+          <div class="inv-party-name" id="pClientName" style="color:#aab8c2;font-style:italic;font-size:0.9rem;">— Client Name —</div>
+          <div class="inv-party-detail">
+            <span id="pClientAddress" style="color:#c0cdd5;"></span>
+            <span id="pClientSep"></span>
+            <span id="pClientContact" style="color:#c0cdd5;"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SERVICES -->
+      <div class="inv-services">
+        <div class="inv-services-header">
+          <span>Description</span><span>Qty</span><span>Amount</span>
+        </div>
+        <div id="pServices"></div>
+      </div>
+
+      <!-- TOTALS -->
+      <div class="inv-totals">
+        <div class="inv-totals-table">
+          <div class="inv-totals-row"><span>Subtotal</span><span class="amount" id="pSubtotal">$0.00</span></div>
+          <div class="inv-totals-row" id="taxRow" style="display:none">
+            <span>Tax (<span id="pTaxPct">0</span>%)</span>
+            <span class="amount" id="pTax">$0.00</span>
+          </div>
+          <div class="inv-totals-row total"><span>Total Due</span><span class="amount" id="pTotal">$0.00</span></div>
+        </div>
+      </div>
+
+      <!-- PAYMENT -->
+      <div class="inv-payment" id="pPaymentBlock">
+        <div class="inv-payment-label">💳 Payment Information</div>
+        <div class="inv-payment-info">
+          <strong id="pPayMethod">Zelle · Cash · Venmo</strong><br>
+          <span id="pPayInfo"></span>
+        </div>
+      </div>
+
+      <!-- NOTES -->
+      <div class="inv-notes" id="pNotesBlock">
+        <div class="inv-notes-label">📝 Notes</div>
+        <div class="inv-notes-text" id="pNotes">Thank you for choosing Flavia Cleaning!</div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="inv-footer">
+        <div class="inv-footer-msg">"A clean home, a happy heart. ✨"</div>
+        <div class="inv-footer-contact" id="pFooterContact">Flavia Cleaning Services</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  let services = [
+    { desc: 'House Cleaning', qty: 1, price: 0 },
+  ];
+
+  function fmt(n) { return '$' + parseFloat(n||0).toFixed(2); }
+
+  function formatDate(val) {
+    if (!val) return '—';
+    const [y,m,d] = val.split('-');
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${months[parseInt(m)-1]} ${parseInt(d)}, ${y}`;
+  }
+
+  function renderServices() {
+    const c = document.getElementById('servicesContainer');
+    c.innerHTML = '';
+    services.forEach((s, i) => {
+      const row = document.createElement('div');
+      row.className = 'service-row';
+      row.innerHTML = `
+        <input value="${s.desc}" placeholder="Service description" oninput="services[${i}].desc=this.value;update()">
+        <input type="number" value="${s.qty}" min="1" oninput="services[${i}].qty=this.value;update()">
+        <input type="number" value="${s.price}" min="0" step="0.01" placeholder="0.00" oninput="services[${i}].price=this.value;update()">
+        <button class="btn-remove" onclick="removeService(${i})" title="Remove">✕</button>
+      `;
+      c.appendChild(row);
+    });
+  }
+
+  function addService() {
+    services.push({ desc: '', qty: 1, price: 0 });
+    renderServices(); update();
+  }
+
+  function removeService(i) {
+    services.splice(i, 1);
+    renderServices(); update();
+  }
+
+  function g(id) { return document.getElementById(id)?.value || ''; }
+  function st(id, val) { const el = document.getElementById(id); if(el) el.textContent = val; }
+  function sh(id, val) { const el = document.getElementById(id); if(el) el.innerHTML = val; }
+
+  function update() {
+    const myName = g('myName');
+    st('pMyName', myName || 'Flavia Cleaning');
+    st('pInvNum', g('invNum'));
+
+    // From section
+    const phone = g('myPhone'), email = g('myEmail'), addr = g('myAddress');
+    const fromEl = document.getElementById('pMyPhone')?.parentElement;
+    if(fromEl) {
+      fromEl.innerHTML = [phone, email, addr].filter(Boolean).join('<br>') || '';
+    }
+
+    // Client section — show placeholder style if empty
+    const clientName = g('clientName');
+    const clientNameEl = document.getElementById('pClientName');
+    if(clientNameEl) {
+      if(clientName) {
+        clientNameEl.textContent = clientName;
+        clientNameEl.style.color = '';
+        clientNameEl.style.fontStyle = '';
+        clientNameEl.style.fontSize = '';
+      } else {
+        clientNameEl.textContent = '— Client Name —';
+        clientNameEl.style.color = '#aab8c2';
+        clientNameEl.style.fontStyle = 'italic';
+        clientNameEl.style.fontSize = '0.9rem';
+      }
+    }
+
+    const clientAddr = g('clientAddress'), clientCon = g('clientContact');
+    const clientDetailEl = document.getElementById('pClientAddress')?.parentElement;
+    if(clientDetailEl) {
+      const parts = [clientAddr, clientCon].filter(Boolean);
+      clientDetailEl.innerHTML = parts.length ? parts.join('<br>') : '<span style="color:#c8d8e0;font-style:italic;font-size:0.8rem;">— Address —</span>';
+    }
+
+    sh('pInvDate', formatDate(g('invDate')));
+    sh('pServiceDate', formatDate(g('serviceDate')));
+    sh('pDueDate', formatDate(g('dueDate')));
+
+    st('pPayMethod', g('payMethod'));
+    st('pPayInfo', g('payInfo').replace(/\n/g,' · '));
+    st('pNotes', g('notes'));
+    st('pFooterContact', g('myEmail') || g('myPhone') || 'Flavia Cleaning Services');
+
+    // Services
+    const pSvc = document.getElementById('pServices');
+    pSvc.innerHTML = '';
+    let subtotal = 0;
+    services.forEach(sv => {
+      const lineTotal = parseFloat(sv.qty||1) * parseFloat(sv.price||0);
+      subtotal += lineTotal;
+      const row = document.createElement('div');
+      row.className = 'inv-service-row';
+      row.innerHTML = `
+        <span class="inv-service-name">${sv.desc||'—'}</span>
+        <span class="inv-service-qty">${sv.qty}</span>
+        <span class="inv-service-price">${fmt(lineTotal)}</span>
+      `;
+      pSvc.appendChild(row);
+    });
+
+    const taxRate = parseFloat(g('taxRate')||0);
+    const tax = subtotal * taxRate / 100;
+    const total = subtotal + tax;
+    st('pSubtotal', fmt(subtotal));
+    st('pTaxPct', taxRate);
+    st('pTax', fmt(tax));
+    st('pTotal', fmt(total));
+    document.getElementById('taxRow').style.display = taxRate > 0 ? 'flex' : 'none';
+  }
+
+  // Dates
+  const today = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const todayStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+  const due = new Date(); due.setDate(due.getDate()+14);
+  const dueStr = `${due.getFullYear()}-${pad(due.getMonth()+1)}-${pad(due.getDate())}`;
+  document.getElementById('invDate').value = todayStr;
+  document.getElementById('serviceDate').value = todayStr;
+  document.getElementById('dueDate').value = dueStr;
+
+  renderServices();
+  update();
+</script>
+</body>
+</html>
